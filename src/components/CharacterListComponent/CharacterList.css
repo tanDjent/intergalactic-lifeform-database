@@ -44,6 +44,21 @@
   font-family: "Creepster", cursive;
   color: white;
 }
-.loader {
-  height: calc(100vh - 10rem);
+
+.scrollTop {
+  position: fixed;
+  width: 80px !important;
+  bottom: 20px;
+  right: 20px;
+  align-items: center;
+  height: 80px !important;
+  justify-content: center;
+  z-index: 1000;
+  cursor: pointer;
+  animation: fadeIn 0.3s;
+  transition: opacity 0.4s;
+  opacity: 0.5;
+}
+.scrollTop:hover {
+  opacity: 1;
 }

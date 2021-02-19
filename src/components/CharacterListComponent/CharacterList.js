@@ -5,11 +5,29 @@ import { DebounceInput } from "react-debounce-input";
 import { Card, CardImg, CardTitle, List } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faArrowCircleUp,
   faHeartbeat,
   faQuestion,
   faSkullCrossbones,
 } from "@fortawesome/free-solid-svg-icons";
 export default function CharacterList() {
+  const scrollTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const [showScroll, setShowScroll] = useState(false);
+
+  const checkScrollTop = () => {
+    if (!showScroll && window.pageYOffset > 400) {
+      setShowScroll(true);
+    } else if (showScroll && window.pageYOffset <= 400) {
+      setShowScroll(false);
+    }
+  };
+
+  window.addEventListener("scroll", checkScrollTop);
+
+  //top scroll code ends here
   const apiUrl = "https://rickandmortyapi.com/api/character/";
   const [lastPage, setLastPage] = useState();
   const [characters, setCharacters] = useState([]);
@@ -97,6 +115,12 @@ export default function CharacterList() {
   }, [pagenum]);
   return (
     <div className='container-fluid'>
+      <FontAwesomeIcon
+        className='scrollTop'
+        onClick={scrollTop}
+        style={{ height: 40, display: showScroll ? "flex" : "none" }}
+        icon={faArrowCircleUp}
+      />
       <div className='row'>
         <div className='col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3'>
           <DebounceInput
