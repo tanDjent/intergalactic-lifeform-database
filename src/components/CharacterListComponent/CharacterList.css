@@ -1,0 +1,41 @@
+.card {
+  margin-top: 2rem;
+  background-color: #fafd7cff !important;
+}
+.character-status {
+  margin-top: 6rem;
+  text-align: center;
+}
+.search-field {
+  font-family: "Creepster", cursive;
+  border: none;
+  width: 100%;
+  height: 70px;
+  background-color: #917c5dff;
+  padding: 1rem;
+  font-size: 35px;
+  color: white !important;
+}
+@media screen and (max-width: 768px) {
+  .character-status {
+    margin-top: 2rem;
+  }
+}
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  font-family: "Creepster", cursive;
+  color: white;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  font-family: "Creepster", cursive;
+  color: white;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  font-family: "Creepster", cursive;
+  color: white;
+}

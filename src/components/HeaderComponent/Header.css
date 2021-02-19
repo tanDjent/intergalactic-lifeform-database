@@ -1,0 +1,25 @@
+.schwifty-title {
+  font-family: getSchwifty;
+  font-weight: 100;
+  color: white;
+  text-align: center;
+}
+.jumbotron {
+  display: block;
+  background-color: black !important;
+  border-radius: 0% !important;
+  padding: 2rem 1rem !important;
+}
+.title-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 139px;
+  width: 436px;
+}
+@media screen and (max-width: 768px) {
+  .title-image {
+    height: 104px;
+    width: 327px;
+  }
+}
