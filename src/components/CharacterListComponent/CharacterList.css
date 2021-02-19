@@ -2,9 +2,15 @@
   margin-top: 2rem;
   background-color: #fafd7cff !important;
 }
+.card-image {
+  height: 250x;
+  width: 150px;
+}
 .character-status {
-  margin-top: 6rem;
   text-align: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  position: absolute;
 }
 .search-field {
   font-family: "Creepster", cursive;
@@ -18,7 +24,6 @@
 }
 @media screen and (max-width: 768px) {
   .character-status {
-    margin-top: 2rem;
   }
 }
 ::placeholder {
@@ -38,4 +43,7 @@
   /* Microsoft Edge */
   font-family: "Creepster", cursive;
   color: white;
+}
+.loader {
+  height: calc(100vh - 10rem);
 }

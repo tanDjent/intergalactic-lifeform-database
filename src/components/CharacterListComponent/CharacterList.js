@@ -1,16 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import "./CharacterList.css";
 import { DebounceInput } from "react-debounce-input";
-import {
-  Card,
-  CardImg,
-  CardText,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  List,
-} from "reactstrap";
+import { Card, CardImg, CardTitle, List } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHeartbeat,
@@ -18,22 +10,95 @@ import {
   faSkullCrossbones,
 } from "@fortawesome/free-solid-svg-icons";
 export default function CharacterList() {
-  const apiUrl = "https://rickandmortyapi.com/api/character/?page=";
+  const apiUrl = "https://rickandmortyapi.com/api/character/";
+  const [lastPage, setLastPage] = useState();
   const [characters, setCharacters] = useState([]);
   const [pagenum, setPagenum] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [numOfCharacters, setNumOfCharacters] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const observer = useRef();
+  const lastElement = useCallback(
+    (node) => {
+      if (isLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          if (pagenum != lastPage && searchQuery === "") {
+            setIsLoading(true);
+            setPagenum(pagenum + 1);
+          } else {
+            setHasMore(false);
+          }
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, hasMore]
+  );
   useEffect(() => {
-    axios.get(apiUrl + pagenum).then(({ data }) => {
-      setCharacters([...characters, ...data.results]);
-    });
+    axios
+      .get(apiUrl + "?page=" + pagenum)
+      .then(({ data }) => {
+        setIsLoading(false);
+        setLastPage(data.info.pages);
+        setCharacters(data.results);
+        setNumOfCharacters(data.results.length);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        console.log(err);
+      });
   }, []);
   useEffect(() => {
-    console.log(searchQuery);
+    if (searchQuery === "") {
+      setPagenum(1);
+      axios
+        .get(apiUrl + "?page=" + pagenum)
+        .then(({ data }) => {
+          setIsLoading(false);
+          setCharacters(data.results);
+          setNumOfCharacters(data.results.length);
+        })
+        .catch((err) => {
+          setIsLoading(false);
+          console.log(err);
+        });
+    } else {
+      axios
+        .get(apiUrl + "?name=" + searchQuery)
+        .then(({ data }) => {
+          setIsLoading(false);
+          setCharacters(data.results);
+          setNumOfCharacters(data.results.length);
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsLoading(false);
+          setCharacters([]);
+          setNumOfCharacters(0);
+        });
+    }
   }, [searchQuery]);
+  useEffect(() => {
+    if (pagenum === lastPage) setHasMore(false);
+    axios
+      .get(apiUrl + "?page=" + pagenum)
+      .then(({ data }) => {
+        setIsLoading(false);
+        setCharacters([...characters, ...data.results]);
+        setNumOfCharacters(data.results.length + numOfCharacters);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        console.log(err);
+      });
+  }, [pagenum]);
   return (
     <div className='container-fluid'>
       <div className='row'>
-        <div className='col-12 col-sm-4 offset-sm-4'>
+        <div className='col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3'>
           <DebounceInput
             className='search-field'
             placeholder=' Search Character'
@@ -44,19 +109,51 @@ export default function CharacterList() {
         </div>
       </div>
       <div className='row'>
-        <div className='col-12 col-sm-4 offset-sm-4'>
+        <div className='col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3'>
           <List type='unstyled'>
             {characters.map(
               (
                 { image, name, location, gender, status, species, origin },
                 index
               ) => {
+                if (numOfCharacters === index + 1 && searchQuery === "") {
+                  return (
+                    <li key={index} ref={lastElement}>
+                      <Card>
+                        <div className='row'>
+                          <div className='col-6'>
+                            <CardImg
+                              key={Date.now()}
+                              className='card-image'
+                              src={image}
+                              alt={name}
+                            />
+                          </div>
+                          <div className='col-6 character-status'>
+                            <CardTitle tag='h3'>{name}</CardTitle>
+                            <h4>
+                              {status === "Alive" ? (
+                                <FontAwesomeIcon icon={faHeartbeat} />
+                              ) : status === "Dead" ? (
+                                <FontAwesomeIcon icon={faSkullCrossbones} />
+                              ) : (
+                                <FontAwesomeIcon icon={faQuestion} />
+                              )}{" "}
+                              {status}- {species}
+                            </h4>
+                          </div>
+                        </div>
+                      </Card>
+                    </li>
+                  );
+                }
                 return (
                   <li key={index}>
                     <Card>
                       <div className='row'>
                         <div className='col-6'>
                           <CardImg
+                            key={Date.now()}
                             className='card-image'
                             src={image}
                             alt={name}
@@ -82,6 +179,7 @@ export default function CharacterList() {
               }
             )}
           </List>
+          {hasMore && searchQuery === "" && <div>Loading...</div>}
         </div>
       </div>
     </div>
