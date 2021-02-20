@@ -1,3 +1,6 @@
+#The last 2 commits weren't working that well so consider the commit named deployment to be the best state of the React App
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
