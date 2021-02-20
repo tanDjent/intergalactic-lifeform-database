@@ -2,13 +2,25 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import "./CharacterList.css";
 import { DebounceInput } from "react-debounce-input";
-import { Card, CardImg, CardTitle, List } from "reactstrap";
+import {
+  Card,
+  CardImg,
+  CardTitle,
+  List,
+  Modal,
+  ModalHeader,
+  ModalBody,
+} from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowCircleUp,
   faHeartbeat,
   faQuestion,
   faSkullCrossbones,
+  faVenusMars,
+  faGlobeAsia,
+  faMale,
+  faCircle,
 } from "@fortawesome/free-solid-svg-icons";
 export default function CharacterList() {
   const scrollTop = () => {
@@ -28,6 +40,8 @@ export default function CharacterList() {
   window.addEventListener("scroll", checkScrollTop);
 
   //top scroll code ends here
+  const [modal, setModal] = useState(false);
+  const toggle = () => setModal(!modal);
   const apiUrl = "https://rickandmortyapi.com/api/character/";
   const [lastPage, setLastPage] = useState();
   const [characters, setCharacters] = useState([]);
@@ -35,6 +49,14 @@ export default function CharacterList() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [numOfCharacters, setNumOfCharacters] = useState(0);
+  const [modalCharacter, setModalCharacter] = useState({
+    name: "",
+    gender: "",
+    status: "",
+    location: { name: "" },
+    species: "",
+    origin: { name: "" },
+  });
   const [hasMore, setHasMore] = useState(true);
   const observer = useRef();
   const lastElement = useCallback(
@@ -115,6 +137,67 @@ export default function CharacterList() {
   }, [pagenum]);
   return (
     <div className='container-fluid'>
+      <Modal isOpen={modal} toggle={toggle} className='character-modal'>
+        <ModalHeader toggle={toggle}>Character Details</ModalHeader>
+        <ModalBody>
+          <div className='row'>
+            <div className='col-6'>
+              {" "}
+              <img
+                src={modalCharacter.image}
+                alt={modalCharacter.name}
+                className='modal-image'
+              />
+            </div>
+            <div className='col-6 modal-character-name'>
+              <h4>{modalCharacter.name}</h4>
+              <h4>
+                {modalCharacter.status === "Alive" ? (
+                  <FontAwesomeIcon icon={faHeartbeat} />
+                ) : modalCharacter.status === "Dead" ? (
+                  <FontAwesomeIcon icon={faSkullCrossbones} />
+                ) : (
+                  <FontAwesomeIcon icon={faQuestion} />
+                )}{" "}
+                {modalCharacter.status}- {modalCharacter.species}
+              </h4>
+            </div>
+          </div>
+          <hr className='solid'></hr>
+          <div
+            className='row'
+            style={{ marginBottom: "2rem", marginTop: "1rem" }}
+          >
+            <div className='col-6'>
+              <h6>
+                <FontAwesomeIcon icon={faVenusMars} /> Gender:{" "}
+                {modalCharacter.gender}
+              </h6>
+            </div>
+            <div className='col-6'>
+              <h6>
+                <FontAwesomeIcon icon={faGlobeAsia} /> Location:{" "}
+                {modalCharacter.location.name}
+              </h6>
+            </div>
+          </div>
+          <div className='row'>
+            <div className='col-6'>
+              <h6>
+                {" "}
+                <FontAwesomeIcon icon={faMale} /> Species:{" "}
+                {modalCharacter.species}
+              </h6>
+            </div>
+            <div className='col-6'>
+              <h6>
+                <FontAwesomeIcon icon={faCircle} /> Origin:{" "}
+                {modalCharacter.origin.name}
+              </h6>
+            </div>
+          </div>
+        </ModalBody>
+      </Modal>
       <FontAwesomeIcon
         className='scrollTop'
         onClick={scrollTop}
@@ -143,7 +226,12 @@ export default function CharacterList() {
                 if (numOfCharacters === index + 1 && searchQuery === "") {
                   return (
                     <li key={index} ref={lastElement}>
-                      <Card>
+                      <Card
+                        onClick={() => {
+                          setModalCharacter(characters[index]);
+                          toggle();
+                        }}
+                      >
                         <div className='row'>
                           <div className='col-6'>
                             <CardImg
@@ -173,7 +261,12 @@ export default function CharacterList() {
                 }
                 return (
                   <li key={index}>
-                    <Card>
+                    <Card
+                      onClick={() => {
+                        setModalCharacter(characters[index]);
+                        toggle();
+                      }}
+                    >
                       <div className='row'>
                         <div className='col-6'>
                           <CardImg

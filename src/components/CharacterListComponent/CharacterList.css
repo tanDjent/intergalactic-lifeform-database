@@ -62,3 +62,20 @@
 .scrollTop:hover {
   opacity: 1;
 }
+.modal-content {
+}
+.modal-image {
+  border-radius: 4rem;
+  width: 75%;
+}
+.modal-character-name {
+  position: absolute;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.modal-title {
+  padding-left: 2rem !important;
+}
+.modal-body {
+  padding-left: 2rem !important;
+}
