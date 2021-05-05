@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/intergalactic-lifeform-database/static/css/main.216d8669.chunk.css",
+    "main.js": "/intergalactic-lifeform-database/static/js/main.0b165359.chunk.js",
+    "main.js.map": "/intergalactic-lifeform-database/static/js/main.0b165359.chunk.js.map",
+    "runtime-main.js": "/intergalactic-lifeform-database/static/js/runtime-main.6d226028.js",
+    "runtime-main.js.map": "/intergalactic-lifeform-database/static/js/runtime-main.6d226028.js.map",
+    "static/css/2.150d169a.chunk.css": "/intergalactic-lifeform-database/static/css/2.150d169a.chunk.css",
+    "static/js/2.b492fc91.chunk.js": "/intergalactic-lifeform-database/static/js/2.b492fc91.chunk.js",
+    "static/js/2.b492fc91.chunk.js.map": "/intergalactic-lifeform-database/static/js/2.b492fc91.chunk.js.map",
+    "static/js/3.83497135.chunk.js": "/intergalactic-lifeform-database/static/js/3.83497135.chunk.js",
+    "static/js/3.83497135.chunk.js.map": "/intergalactic-lifeform-database/static/js/3.83497135.chunk.js.map",
+    "index.html": "/intergalactic-lifeform-database/index.html",
+    "static/css/2.150d169a.chunk.css.map": "/intergalactic-lifeform-database/static/css/2.150d169a.chunk.css.map",
+    "static/css/main.216d8669.chunk.css.map": "/intergalactic-lifeform-database/static/css/main.216d8669.chunk.css.map",
+    "static/js/2.b492fc91.chunk.js.LICENSE.txt": "/intergalactic-lifeform-database/static/js/2.b492fc91.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/intergalactic-lifeform-database/static/media/get_schwifty.c3d1dfc6.ttf",
+    "static/media/rickandmortytitle.ee0728d3.png": "/intergalactic-lifeform-database/static/media/rickandmortytitle.ee0728d3.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6d226028.js",
+    "static/css/2.150d169a.chunk.css",
+    "static/js/2.b492fc91.chunk.js",
+    "static/css/main.216d8669.chunk.css",
+    "static/js/main.0b165359.chunk.js"
+  ]
+}
