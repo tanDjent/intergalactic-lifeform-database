@@ -1,4 +1,4 @@
-#The last 2 commits weren't working that well so consider the commit named deployment to be the best state of the React App
+
 
 
 # Getting Started with Create React App
