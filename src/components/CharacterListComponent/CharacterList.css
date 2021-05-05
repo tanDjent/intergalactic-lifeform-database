@@ -2,15 +2,10 @@
   margin-top: 2rem;
   background-color: #fafd7cff !important;
 }
-.card-image {
-  height: 250px;
-  width: 150px;
-}
 .character-status {
   text-align: center;
   margin-top: auto;
   margin-bottom: auto;
-  position: absolute;
 }
 .search-field {
   font-family: "Creepster", cursive;
@@ -69,7 +64,6 @@
   width: 75%;
 }
 .modal-character-name {
-  position: absolute;
   margin-top: auto;
   margin-bottom: auto;
 }
