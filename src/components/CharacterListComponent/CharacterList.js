@@ -266,6 +266,7 @@ export default function CharacterList() {
                         setModalCharacter(characters[index]);
                         toggle();
                       }}
+                      style={{ cursor: "pointer" }}
                     >
                       <div className='row'>
                         <div className='col-6'>
